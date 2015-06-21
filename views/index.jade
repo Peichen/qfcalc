@@ -1,0 +1,80 @@
+html
+  head
+    link(rel='stylesheet', href='/stylesheets/jquery.mobile-1.4.5.min.css')
+    script(src='/javascripts/jquery-1.11.3.min.js')
+    script(src='/javascripts/jquery.mobile-1.4.5.min.js')
+    style#textinput-controlgroup.
+      .controlgroup-textinput{
+      padding-top:.22em;
+      padding-bottom:.22em;
+      }
+    script.
+      $(function (){
+          $("#solve-target").on("tap",function(event){
+              $.get("/SolveTarget",
+                    {initialValue:$("#initial-value").val(),
+                     periodicalInstallment:$("#periodical-installment").val(),
+                     investmentPeriod:$("#investment-period").val(),
+                     vestingType:$("#vesting-type").val(),
+                     returnRate:$("#return-rate").val(),
+                     inflationRate:$("#inflation-rate").val(),
+                     inflationFactor:$("#inflation-factor").val(),
+                     taxRate:$("#tax-rate").val(),
+                     taxCategory:$("#tax-category").val()
+                    },
+                    function(data){
+                      //console.log(data);
+                      //console.log($("#target-value").val());
+                      $("#target-value").val(data.targetValue);
+                    }
+                   );
+          });
+      });
+  body
+    #page1(data-role='page')
+      div(data-role='header')
+        h1 #{title}
+      .ui-content(data-role='main')
+        .ui-field-contain
+          label(for='target-value') Target Value:
+          div(data-role='controlgroup', data-type='horizontal')
+            input#target-value(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='target amount', data-clear-btn='true', value='#{targetValue}')
+            button#solve-target Solve
+        .ui-field-contain
+          label(for='initial-value') Initial Value:
+          div(data-role='controlgroup', data-type='horizontal')
+            input#initial-value(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='initial amount', data-clear-btn='true', value='#{initialValue}')
+            button Solve
+        .ui-field-contain
+          label(for='periodical-installment') Periodical Installment:
+          div(data-role='controlgroup', data-type='horizontal')
+            input#periodical-installment(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='periodical amount', data-clear-btn='true', value='#{periodicalInstallment}')
+            button Solve
+        .ui-field-contain
+          label(for='investment-period') Investiment Period (yrs):
+          div(data-role='controlgroup', data-type='horizontal')
+            input#investment-period(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='number of years', data-clear-btn='true', value='#{investmentPeriod}')
+            button Solve
+            select#vesting-type(name='vesting-type',value="#{vestingType}")
+              option(value='annually') Annually
+              option(value='quarterly') Quarterly
+              option(value='monthly') Monthly
+        .ui-field-contain
+          label(for='return-rate') Return rate (%):
+          div(data-role='controlgroup', data-type='horizontal')
+            input#return-rate(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='investment return in %', data-clear-btn='true', value='#{returnRate}')
+            button Solve
+        .ui-field-contain
+          label(for='inflation-rate') Inflation rate (%):
+          div(data-role='controlgroup', data-type='horizontal')
+            input#inflation-rate(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='inflation each year in %', data-clear-btn='true' value ='#{inflationRate}')
+            select#inflation-factor(name='inflation-factor', data-role='slider', value='#{inflationFactor}')
+              option(value='on') On
+              option(value='off') Off
+        .ui-field-contain
+          label(for='tax-rate') Tax rate (%):
+          div(data-role='controlgroup', data-type='horizontal')
+            input#tax-rate(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='tax in %', data-clear-btn='true', value='#{taxRate}')
+            select#tax-category(name='tax-category', data-role='slider', value='#{taxRate}')
+              option(value='on') On
+              option(value='off') Off
