@@ -10,6 +10,7 @@ html
       }
     script.
       $(function (){
+          var precision = 100.0;
           $("#solve-target").on("tap",function(event){
               $.get("/SolveTarget",
                     {initialValue:$("#initial-value").val(),
@@ -25,10 +26,78 @@ html
                     function(data){
                       //console.log(data);
                       //console.log($("#target-value").val());
-                      $("#target-value").val(data.targetValue);
+                      $("#target-value").val(Math.round(data.targetValue*precision)/precision);
                     }
                    );
           });
+          $("#solve-initial").on("tap",function(event){
+              $.get("/SolveInitial",
+                    {targetValue:$("#target-value").val(),
+                     periodicalInstallment:$("#periodical-installment").val(),
+                     investmentPeriod:$("#investment-period").val(),
+                     vestingType:$("#vesting-type").val(),
+                     returnRate:$("#return-rate").val(),
+                     inflationRate:$("#inflation-rate").val(),
+                     inflationFactor:$("#inflation-factor").val(),
+                     taxRate:$("#tax-rate").val(),
+                     taxCategory:$("#tax-category").val()
+                    },
+                    function(data){
+                      $("#initial-value").val(Math.round(data.initialValue*precision)/precision);
+                    }
+                   );
+          });
+          $("#solve-installment").on("tap",function(event){
+              $.get("/SolveInstallment",
+                    {targetValue:$("#target-value").val(),
+                     initialValue:$("#initial-value").val(),
+                     investmentPeriod:$("#investment-period").val(),
+                     vestingType:$("#vesting-type").val(),
+                     returnRate:$("#return-rate").val(),
+                     inflationRate:$("#inflation-rate").val(),
+                     inflationFactor:$("#inflation-factor").val(),
+                     taxRate:$("#tax-rate").val(),
+                     taxCategory:$("#tax-category").val()
+                    },
+                    function(data){
+                      $("#periodical-installment").val(Math.round(data.periodicalInstallment*precision)/precision);
+                    }
+                   );
+          });
+          $("#solve-period").on("tap",function(event){
+              $.get("/SolvePeriod",
+                    {targetValue:$("#target-value").val(),
+                     initialValue:$("#initial-value").val(),
+                     periodicalInstallment:$("#periodical-installment").val(),
+                     vestingType:$("#vesting-type").val(),
+                     returnRate:$("#return-rate").val(),
+                     inflationRate:$("#inflation-rate").val(),
+                     inflationFactor:$("#inflation-factor").val(),
+                     taxRate:$("#tax-rate").val(),
+                     taxCategory:$("#tax-category").val()
+                    },
+                    function(data){
+                      $("#investment-period").val(Math.round(data.investmentPeriod*precision)/precision);
+                    }
+                   );
+          });
+          $("#solve-return").on("tap",function(event){
+              $.get("/SolveReturn",
+                    {targetValue:$("#target-value").val(),
+                     initialValue:$("#initial-value").val(),
+                     periodicalInstallment:$("#periodical-installment").val(),
+                     vestingType:$("#vesting-type").val(),
+                     investmentPeriod:$("#investment-period").val(),
+                     inflationRate:$("#inflation-rate").val(),
+                     inflationFactor:$("#inflation-factor").val(),
+                     taxRate:$("#tax-rate").val(),
+                     taxCategory:$("#tax-category").val()
+                    },
+                    function(data){
+                      $("#return-rate").val(Math.round(data.returnRate*precision)/precision);
+                    }
+                   );
+          });                                          
       });
   body
     #page1(data-role='page')
@@ -44,17 +113,17 @@ html
           label(for='initial-value') Initial Value:
           div(data-role='controlgroup', data-type='horizontal')
             input#initial-value(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='initial amount', data-clear-btn='true', value='#{initialValue}')
-            button Solve
+            button#solve-initial Solve
         .ui-field-contain
           label(for='periodical-installment') Periodical Installment:
           div(data-role='controlgroup', data-type='horizontal')
             input#periodical-installment(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='periodical amount', data-clear-btn='true', value='#{periodicalInstallment}')
-            button Solve
+            button#solve-installment Solve
         .ui-field-contain
           label(for='investment-period') Investiment Period (yrs):
           div(data-role='controlgroup', data-type='horizontal')
             input#investment-period(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='number of years', data-clear-btn='true', value='#{investmentPeriod}')
-            button Solve
+            button#solve-period Solve
             select#vesting-type(name='vesting-type',value="#{vestingType}")
               option(value='annually') Annually
               option(value='quarterly') Quarterly
@@ -63,7 +132,7 @@ html
           label(for='return-rate') Return rate (%):
           div(data-role='controlgroup', data-type='horizontal')
             input#return-rate(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='investment return in %', data-clear-btn='true', value='#{returnRate}')
-            button Solve
+            button#solve-return Solve
         .ui-field-contain
           label(for='inflation-rate') Inflation rate (%):
           div(data-role='controlgroup', data-type='horizontal')
