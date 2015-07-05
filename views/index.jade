@@ -106,43 +106,44 @@ html
       .ui-content(data-role='main')
         .ui-field-contain
           label(for='target-value') Target Value:
-          div(data-role='controlgroup', data-type='horizontal')
+          div(data-role='controlgroup', data-type='vertical')
             input#target-value(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='target amount', data-clear-btn='true', value='#{targetValue}')
             button#solve-target Solve
         .ui-field-contain
           label(for='initial-value') Initial Value:
-          div(data-role='controlgroup', data-type='horizontal')
+          div(data-role='controlgroup', data-type='vertical')
             input#initial-value(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='initial amount', data-clear-btn='true', value='#{initialValue}')
             button#solve-initial Solve
         .ui-field-contain
           label(for='periodical-installment') Periodical Installment:
-          div(data-role='controlgroup', data-type='horizontal')
+          div(data-role='controlgroup', data-type='vertical')
             input#periodical-installment(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='periodical amount', data-clear-btn='true', value='#{periodicalInstallment}')
             button#solve-installment Solve
         .ui-field-contain
           label(for='investment-period') Investiment Period (yrs):
-          div(data-role='controlgroup', data-type='horizontal')
+          div(data-role='controlgroup', data-type='vertical')
             input#investment-period(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='number of years', data-clear-btn='true', value='#{investmentPeriod}')
-            button#solve-period Solve
             select#vesting-type(name='vesting-type',value="#{vestingType}")
               option(value='annually') Annually
               option(value='quarterly') Quarterly
-              option(value='monthly') Monthly
+              option(value='monthly') Monthly            
+            button#solve-period Solve
+
         .ui-field-contain
           label(for='return-rate') Return rate (%):
-          div(data-role='controlgroup', data-type='horizontal')
+          div(data-role='controlgroup', data-type='vertical')
             input#return-rate(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='investment return in %', data-clear-btn='true', value='#{returnRate}')
             button#solve-return Solve
         .ui-field-contain
           label(for='inflation-rate') Inflation rate (%):
-          div(data-role='controlgroup', data-type='horizontal')
+          div(data-role='controlgroup', data-type='vertical')
             input#inflation-rate(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='inflation each year in %', data-clear-btn='true' value ='#{inflationRate}')
             select#inflation-factor(name='inflation-factor', data-role='slider', value='#{inflationFactor}')
               option(value='on') On
               option(value='off') Off
         .ui-field-contain
           label(for='tax-rate') Tax rate (%):
-          div(data-role='controlgroup', data-type='horizontal')
+          div(data-role='controlgroup', data-type='vertical')
             input#tax-rate(type='text', pattern='[0-9]*[.]{0,1}[0-9]*', data-wrapper-class='controlgroup-textinput ui-btn', placeholder='tax in %', data-clear-btn='true', value='#{taxRate}')
             select#tax-category(name='tax-category', data-role='slider', value='#{taxRate}')
               option(value='on') On
